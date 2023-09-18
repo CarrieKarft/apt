@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
     # skip_before_action :raise_exceptions, only: [:create]
+    skip_before_action :authorize, only: [:create]
 # shows user profile
     def show 
         # can test after adding sessions controller + authorization/authentication
         @user = User.find(session[:user_id])
+        # user = User.find(params[:id])
         render json: @user, status: 200
     end
 # new user signup
@@ -33,7 +35,6 @@ class UsersController < ApplicationController
     def destroy
         @user.delete
         head :no_content, status: 204
-
     end
 
     private
