@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :applications
   resources :sessions, only: [:create, :destroy]
   resources :users
   # Routing logic: fallback requests for React Router.
