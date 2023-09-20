@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     def create
         new_user = User.create!(user_params)
         # if new_user.valid?
-        session[:user_id] = user.id
+        session[:user_id] = new_user.id
         render json: new_user, status: 202
         # else 
         #     render json: {error: new_user.errors.full_messages}, status: :unprocessable_entity
@@ -22,10 +22,10 @@ class UsersController < ApplicationController
 # how to add rescue to this method
     def update
         # doesnt work
-        find_user = User.find(session[:user_id])
-        updated_user = find_user.update!(user_params)
+        updated_user = User.find(session[:user_id]).update!(user_params)
+        # updated_user = find_user.update!(user_params)
         # why is above line evaluating to true?
-        render json: updated_user, status: 202
+        render json: updated_user, status: :accepted
         # can I call update! on an instance variable?
         # if updated_user.valid?
         #     render json: updated_user, status: 202
