@@ -1,8 +1,15 @@
 class User < ApplicationRecord
-    has_many :applicatins
+    # clean up validations
+    has_many :applications
+    has_many :appartments, :through :applications
+
     validates :username, presence: true, uniqueness: true
-    validates :password_digest, presence: true
+    validates :password, presence: true
+    # should change to validates :password, presence: true, confirmation: true?
+    # maybe add more validations like length to password
+    validates :password_confirmation, presence: true
     validates :phone, length: {is: 10}
+
     has_secure_password
 
 end
