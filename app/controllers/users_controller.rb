@@ -3,13 +3,17 @@ class UsersController < ApplicationController
     skip_before_action :authorize, only: [:create]
 # shows user profile
     def show 
+        # needs to render authorize error if user not logged in
+
         # works
         # can test after adding sessions controller + authorization/authentication
-        @user = User.find(session[:user_id])
-        render json: @user, status: 200
+        user = find_user
+        render json: user, status: 200
     end
 # new user signup
     def create
+        # needs to render invlide exception if info is invalid
+
         new_user = User.create!(user_params)
         # if new_user.valid?
         session[:user_id] = new_user.id
@@ -21,8 +25,12 @@ class UsersController < ApplicationController
 # edit user account
 # how to add rescue to this method
     def update
+        # needs to render authorize error if user not logged in
+        # needs to render invlide exception if info is invalid
+
         # doesnt work
-        updated_user = User.find(session[:user_id]).update!(user_params)
+        user = find_user
+        updated_user = user.update!(user_params)
         # updated_user = find_user.update!(user_params)
         # why is above line evaluating to true?
         render json: updated_user, status: :accepted
@@ -36,8 +44,12 @@ class UsersController < ApplicationController
 # delete user account
 # do I need to delete the session when user account deleted? Also need to delete user applicatins
     def destroy
-        find_user = User.find(session[:user_id])
-        find_user.delete
+        # do we need this method? amybe to show that we know to delete all of users applications when user account deleted?
+
+        # needs to render authorize error if user not logged in
+
+        user = find_user
+        user.delete
         head :no_content, status: 204
     end
 
