@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
-    # skip_before_action :raise_exceptions, only: [:create]
+    skip_before_action :raise_exceptions, only: [:create]
     skip_before_action :authorize, only: [:create]
 # shows user profile
+    def index
+        users = User.all 
+        render json: users
+    end
+
     def show 
         # needs to render authorize error if user not logged in
 
@@ -28,18 +33,10 @@ class UsersController < ApplicationController
         # needs to render authorize error if user not logged in
         # needs to render invlide exception if info is invalid
 
-        # doesnt work
+        # need to test ChatGPT fixed for me
         user = find_user
-        updated_user = user.update!(user_params)
-        # updated_user = find_user.update!(user_params)
-        # why is above line evaluating to true?
-        render json: updated_user, status: :accepted
-        # can I call update! on an instance variable?
-        # if updated_user.valid?
-        #     render json: updated_user, status: 202
-        # else    
-        #     render json: {error: updated_user.errors.full_messages}, status: :unprocessable_entity
-        # end
+        user.update!(user_params)
+        render json: user, status: :accepted
     end
 # delete user account
 # do I need to delete the session when user account deleted? Also need to delete user applicatins
