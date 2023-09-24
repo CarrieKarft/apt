@@ -3,7 +3,7 @@ class Appartment < ApplicationRecord
     validates :phone, length: {is: 10}
 
     has_many :applications
-    has_many :users, :through :applications
+    has_many :users, through: :applications
 end
 
 # t.string "name"
