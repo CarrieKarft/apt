@@ -7,6 +7,6 @@ class Application < ApplicationRecord
     validates :current_residence_address, presence: :true
 
     belongs_to :user
-    belongs_to :appartments
+    belongs_to :appartment
 end
 
