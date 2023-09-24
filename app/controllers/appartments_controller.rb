@@ -3,7 +3,7 @@ class AppartmentsController < ApplicationController
 
     def show
         # this will need a record not found response
-        
+
         apt = Appartment.find(params[id]) 
         render json: apt, status: 200
     end
