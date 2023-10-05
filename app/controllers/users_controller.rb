@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :raise_exceptions, only: [:create]
+    # skip_before_action :raise_exceptions, only: [:create]
     skip_before_action :authorize, only: [:create]
 # shows user profile
     def index

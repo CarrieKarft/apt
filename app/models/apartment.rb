@@ -1,9 +1,12 @@
-class Appartment < ApplicationRecord
-    validates :name, :number_of_rooms, :address, :phone, :available_to_rent, :parking_available, presence: true
-    validates :phone, length: {is: 10}
-
+class Apartment < ApplicationRecord
     has_many :applications
     has_many :users, through: :applications
+
+    validates :name, :number_of_rooms, :address, :phone, presence: true
+    validates :available_to_rent, :parking_available, presence: true, allow_blank: true
+    # change is to min probably
+    validates :phone, length: {is: 10}
+
 end
 
 # t.string "name"

@@ -53,7 +53,7 @@ class ApplicationsController < ApplicationController
     # end
 
     def applicaition_params
-        params.permit(:user_id, :appartment_id, :yearly_income, :current_residence_address, :current_residence_phone, :applicant_email, :applicant_name)
+        params.permit(:user_id, :apartment_id, :yearly_income, :current_residence_address, :current_residence_phone, :applicant_email, :applicant_name)
     end
 
 

@@ -3,5 +3,5 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :username, :phone, :location
   # need to display appartments info not applications
   has_many :applications
-  has_many :appartments
+  has_many :apartments
 end

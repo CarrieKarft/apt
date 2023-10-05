@@ -1,7 +1,7 @@
 class User < ApplicationRecord
     # clean up validations
     has_many :applications
-    has_many :appartments, through: :applications
+    has_many :apartments, through: :applications
 
     validates :username, presence: true, uniqueness: true
     validates :password, presence: true
