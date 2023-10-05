@@ -1,6 +1,6 @@
-class CreateAppartments < ActiveRecord::Migration[6.1]
+class CreateApartments < ActiveRecord::Migration[6.1]
   def change
-    create_table :appartments do |t|
+    create_table :apartments do |t|
       t.string :name
       t.integer :number_of_rooms
       t.boolean :parking_available
