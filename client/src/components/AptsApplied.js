@@ -1,14 +1,19 @@
-import Appartment from "./Apartment";
+import React, {useContext} from "react";
+import Apartment from "./Apartment";
+import { UserContext } from "../context/UserContext";
 
 function AptsAppliedTo() {
+    const {currentUser} = useContext(UserContext)
+    if(!currentUser) return <h2>Loading...</h2>
+    console.log("currentUser", currentUser)
+    const mappingUserApartments = currentUser.apartments.map((apartment, index) => {
+        return <Apartment key={index} apartment={apartment} />
+    })
     return (
-        // no fetch in this component since currentUser.appartments will be user and currentUser context not state
         <div>
             <h2 style={{color: "red"}}>AptsAppliedTo</h2>
-            {/* will mapp over currentUser.appartments and render <Appartment /> for each appartment */}
             {/* click on appartment to view applicaiton? */}
-            <Appartment />
-            <Appartment />
+            {mappingUserApartments}
         </div>
     )
 }
