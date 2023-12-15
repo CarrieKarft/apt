@@ -4,9 +4,10 @@ class ApplicationsController < ApplicationController
     def show
         # needs to render authorize error if user not logged in
         # needs to raise not found exception if application not found
+        # can rais not found exception if using find_by?
 
         user = find_user
-        application = user.applications.find(params[:id])
+        application = user.applications.find_by(apartment_id: params[:id])
         render json: application, status: :found
     end
 
@@ -16,7 +17,7 @@ class ApplicationsController < ApplicationController
 
 
         user = find_user
-        applicaiton = user.applicaitons.create!(applicaition_params)
+        applicaiton = user.applications.create!(applicaition_params)
         render json: applicaiton, status: :created
 
     end
@@ -28,9 +29,9 @@ class ApplicationsController < ApplicationController
 
 
         user = find_user
-        applicaiton = user.applicaitons.find(params[:id])
+        applicaiton = user.applications.find(params[:id])
         # need not found rescue for this
-        updated_application = applicaiton.update!(applicaition_params)
+        updated_application = application.update!(applicaition_params)
         render json: updated_application, status: :created
     end
 
@@ -40,7 +41,7 @@ class ApplicationsController < ApplicationController
 
 
         user = find_user
-        applicaiton = user.applicaitons.find(params[:id])
+        applicaiton = user.applications.find(params[:id])
         application.delete
         head :no_content
     end
@@ -53,6 +54,7 @@ class ApplicationsController < ApplicationController
     # end
 
     def applicaition_params
+        # do I need user_id in params since all of these methods use find_user?
         params.permit(:user_id, :apartment_id, :yearly_income, :current_residence_address, :current_residence_phone, :applicant_email, :applicant_name)
     end
 
