@@ -1,8 +1,11 @@
 import { useState, useContext } from 'react'
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 function LoginForm() {
     // come back to raise fetch up one level to parent component after logout functionality and signup functionality finished
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -18,6 +21,7 @@ function LoginForm() {
             body: JSON.stringify({ username, password }),
         }).then(r => r.json())
         .then(loginData => setCurrentUser(loginData))
+        navigate('/user-profile')
     }
    
     return (

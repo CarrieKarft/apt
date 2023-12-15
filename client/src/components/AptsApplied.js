@@ -1,13 +1,21 @@
 import React, {useContext} from "react";
+import { useParams, NavLink } from "react-router-dom";
 import Apartment from "./Apartment";
 import { UserContext } from "../context/UserContext";
 
 function AptsAppliedTo() {
     const {currentUser} = useContext(UserContext)
+    const {apartments} = currentUser
     if(!currentUser) return <h2>Loading...</h2>
-    console.log("currentUser", currentUser)
+    if (apartments.length < 1) return <p>Looks like you haven't applied to any apartments yet. Click here to view new listings</p>
+    // console.log("currentUser", currentUser)
     const mappingUserApartments = currentUser.apartments.map((apartment, index) => {
-        return <Apartment key={index} apartment={apartment} />
+        return (
+            <div key={index}>
+                <Apartment apartment={apartment} />
+                <NavLink to={`/appartment/${apartment.id}/application`}>click here to view your completed application for {apartment.name}</NavLink>
+            </div>
+        )
     })
     return (
         <div>

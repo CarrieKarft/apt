@@ -1,4 +1,4 @@
-
+import {NavLink} from 'react-router-dom';
 
 function NavBar({ onHandleLogout }) {
     return (
@@ -8,8 +8,8 @@ function NavBar({ onHandleLogout }) {
         // Logout will trigger fetch to sessions#delete
         <div>
             <button onClick={(e) => onHandleLogout(e.target.value)}>Logout</button>
-            <button>Search For Appartments</button>
-            <button>View Applications</button>
+            <NavLink to={'/appartment-listings'}><button>Search For Appartments</button></NavLink>
+            <NavLink to={'/appartment-listings'}><button>View Applications</button></NavLink>
         </div>
     )
 }

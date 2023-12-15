@@ -1,11 +1,13 @@
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 
-function SignupPage() {
+function SignupPage({ handleSignupUser }) {
+
     return (
         <div>
             <h1>SignupPage</h1>
-            <SignupForm />
+            {/* need to fix this so that components are being rendered by app probably */}
+            <SignupForm handleSignupUser={handleSignupUser}/>
             <LoginForm />
         </div>
     )
