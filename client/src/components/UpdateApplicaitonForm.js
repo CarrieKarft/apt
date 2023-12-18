@@ -1,21 +1,22 @@
 import { useState } from 'react'
 import React from 'react';
 
-function UpdateApplicationForm({ handleUpdatingUserApplication, Application, apartmentId }) {
-    const { applicant_email, applicant_name, current_residence_address, current_residence_phone, yearly_income, user_id} = Application
-    console.log(Application)
+function UpdateApplicationForm({ handleUpdatingUserApplication, application, apartmentId }) {
+    const { applicant_email, applicant_name, current_residence_address, current_residence_phone, yearly_income, user_id, id } = application
+    // console.log(application)
 
-    const [applicantEmail, setApplicantEmail] = useState(applicant_email);
-    const [applicantName, setApplicantName] = useState(applicant_name)
-    const [currentResidenceAddress, setCurrentResidenceAddress] = useState(current_residence_address);
-    const [currentResidencePhone, setCurrentResidencePhone] = useState(current_residence_phone);
-    const [yearlyIncome, setYearlyIncome] = useState(yearly_income);
+    const [applicantEmail, setApplicantEmail] = useState("");
+    const [applicantName, setApplicantName] = useState("")
+    const [currentResidenceAddress, setCurrentResidenceAddress] = useState("");
+    const [currentResidencePhone, setCurrentResidencePhone] = useState("");
+    const [yearlyIncome, setYearlyIncome] = useState("");
 
 
     // console.log(completedApplication)
     function createUpdateApplicationObj(e) {
         e.preventDefault()
         const updatedApplicationObj = {
+            id,
             user_id,
             applicant_email: applicantEmail,
             applicant_name: applicantName,
@@ -24,10 +25,10 @@ function UpdateApplicationForm({ handleUpdatingUserApplication, Application, apa
             yearly_income: yearlyIncome,
             apartment_id: apartmentId
         }
-        console.log(updatedApplicationObj)
+        handleUpdatingUserApplication(updatedApplicationObj)
     }
     return (
-        // prefil input fields with applicaiton data passes down as props from completed application
+        // prefil input fields with application data passes down as props from completed application
         <div>
             <h2 style={{color: "red"}}>UpdateApplicationForm</h2>
             <form onSubmit={e => createUpdateApplicationObj(e)}>
