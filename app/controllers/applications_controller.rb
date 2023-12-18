@@ -7,8 +7,8 @@ class ApplicationsController < ApplicationController
         # can rais not found exception if using find_by?
 
         user = find_user
-        application = user.applications.find_by(apartment_id: params[:id])
-        render json: application, status: :found
+        applications = user.applications.where(apartment_id: params[:id])
+        render json: applications, status: :found
     end
 
     def create
@@ -17,8 +17,8 @@ class ApplicationsController < ApplicationController
 
 
         user = find_user
-        applicaiton = user.applications.create!(applicaition_params)
-        render json: applicaiton, status: :created
+        application = user.applications.create!(applicaition_params)
+        render json: application, status: :created
 
     end
 
@@ -29,10 +29,10 @@ class ApplicationsController < ApplicationController
 
 
         user = find_user
-        applicaiton = user.applications.find(params[:id])
+        application = user.applications.find(params[:id])
         # need not found rescue for this
         updated_application = application.update!(applicaition_params)
-        render json: updated_application, status: :created
+        render json: application, status: :created
     end
 
     def destroy
@@ -41,7 +41,7 @@ class ApplicationsController < ApplicationController
 
 
         user = find_user
-        applicaiton = user.applications.find(params[:id])
+        application = user.applications.find(params[:id])
         application.delete
         head :no_content
     end
