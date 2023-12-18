@@ -13,6 +13,7 @@ import {UserContext} from '../src/context/UserContext'
 
 function App() {
   const {currentUser, setCurrentUser} = useContext(UserContext);
+  const [application, setApplication] = useState();
 
   if(!currentUser) return <h2>Loading...</h2>
 
@@ -44,7 +45,36 @@ function App() {
 
   function handleUpdatingUserApplication(updatedApplicationObj) {
     console.log(updatedApplicationObj)
+    const {id} = updatedApplicationObj
+    console.log(id)
+    fetch(`/applications/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedApplicationObj),
+    }).then(r => {
+      if(r.ok) {
+          r.json().then(updatedAppData => handleUpdatingApplicationInUserState(updatedAppData))
+      } else {
+          r.json().then(errorData => console.log(errorData.errors))
+      }
+    })
+
   }
+
+  function handleUpdatingApplicationInUserState(updatedAppData){
+    console.log(updatedAppData)
+    console.log("before state change", currentUser)
+    const filteringOutOldApplication = applications.map(app => app.id === updatedAppData.id ? updatedAppData : app)
+    console.log(filteringOutOldApplication)
+    const updatedCurrentUser = {...currentUser, applications: [filteringOutOldApplication]}
+    setApplication(updatedAppData)
+    // const newApplications = [...currentUser.applications, newAppData]
+    // const updatedCurrentUser = {...currentUser, applications: [newApplications]}
+    setCurrentUser(updatedCurrentUser);
+  }
+  console.log("after state change", currentUser)
 
   function handleCreatingNewApplicaiton(newApplicaitonObj) {
     console.log(newApplicaitonObj)
@@ -66,7 +96,7 @@ function App() {
   function handleAddingApplicationToUserState(newAppData){
     console.log(newAppData)
     console.log("before state managemant", currentUser)
-    // const {applications} = currentUser
+
     const newApplications = [...currentUser.applications, newAppData]
     const updatedCurrentUser = {...currentUser, applications: [newApplications]}
     setCurrentUser(updatedCurrentUser);
@@ -81,13 +111,29 @@ function App() {
   }
   console.log("after state managgement", currentUser)
 
+  function handleApplicationDelete(id){
+    console.log("delete")
+    fetch(`/applications/${id}`, {
+            method: "DELETE"
+        })
+        .then(r => r.json())
+        .then(() => filteringDetetedApplicationFromState(id))
+  }
+
+  function filteringDetetedApplicationFromState(id) {
+    const filteringOutDeletedApplication = application.filter(app => app.id !== id)
+    const updatingCurrentUser = {...currentUser, applications: [filteringOutDeletedApplication]}
+    setCurrentUser(updatingCurrentUser)
+    setApplication()
+  }
+
 
   return (
     <div>
       <ApartmentProvider>
         <Routes>
           <Route path='/appartment-listings' element={<AppartmentsListingPage />} />
-          <Route path='/appartment/:id/application' element={<CompletedAppliction />} handleUpdatingUserApplication={handleUpdatingUserApplication}/>
+          <Route path='/appartment/:id/application' element={<CompletedAppliction handleUpdatingUserApplication={handleUpdatingUserApplication} application={application} setApplication={setApplication} handleApplicationDelete={handleApplicationDelete}/>} />
           <Route path='/apartment/:id/new-application' element={<NewApplicationForm onHandleCreatingNewApplicaiton={handleCreatingNewApplicaiton}/>} />
           <Route path='/signup-page' element={<SignupPage handleSignupUser={handleSignupUser}/>} />
           <Route path='/user-profile' element={<LoggedInUserPage />} />
