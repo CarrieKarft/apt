@@ -4,13 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from '../src/context/UserContext'
+import { ApartmentProvider } from './context/ApartmentContext';
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <App />
+        <ApartmentProvider>
+         <App />
+        </ApartmentProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
