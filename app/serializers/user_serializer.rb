@@ -3,7 +3,7 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :username, :phone, :location, :unique_apartments, :first_name
   # need to display appartments info not applications
   has_many :applications
-  has_many :apartments
+  # has_many :apartments
 
   def unique_apartments
     apartments = object.apartments
@@ -13,6 +13,7 @@ class UserSerializer < ActiveModel::Serializer
 # come back to this when you are working on finishing touches
   def first_name
     name = object.name.split(" ")
+    name.shift
     # byebug
   end
 end
