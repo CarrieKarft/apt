@@ -1,25 +1,24 @@
 import './App.css';
 import {Routes, Route} from "react-router-dom";
-import { useEffect, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import AppartmentsListingPage from './components/ApartmentsListingPage';
 import SignupPage from './components/SignupPage';
 import LoggedInUserPage from './components/LoggedInUserPage';
 import NewApplicationForm from './components/NewApplicationForm';
 import CompletedAppliction from './components/CompletedApplication';
-// import { UserProvider } from './context/UserContext';
-import { ApartmentProvider } from './context/ApartmentContext';
+import UpdateApplicationForm from './components/UpdateApplicaitonForm';
+import { ApartmentContext } from './context/ApartmentContext';
 import {UserContext} from '../src/context/UserContext'
 
 
 function App() {
   const {currentUser, setCurrentUser} = useContext(UserContext);
+  const {apartments, setApartments} = useContext(ApartmentContext);
   const [application, setApplication] = useState();
 
   if(!currentUser) return <h2>Loading...</h2>
 
   const {applications} = currentUser
-  // console.log("current user", currentUser)
-  // console.log("applications", applications)
 
   function handleSignupUser(newUserObj) {
     console.log(newUserObj)
@@ -44,10 +43,10 @@ function App() {
   }
 
   function handleUpdatingUserApplication(updatedApplicationObj) {
-    console.log(updatedApplicationObj)
-    const {id} = updatedApplicationObj
-    console.log(id)
-    fetch(`/applications/${id}`, {
+    console.log("second update obj", updatedApplicationObj)
+    // const {id} = updatedApplicationObj
+    console.log("id", updatedApplicationObj.id)
+    fetch(`/applications/${updatedApplicationObj.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -68,16 +67,24 @@ function App() {
     console.log("before state change", currentUser)
     const filteringOutOldApplication = applications.map(app => app.id === updatedAppData.id ? updatedAppData : app)
     console.log(filteringOutOldApplication)
-    const updatedCurrentUser = {...currentUser, applications: [filteringOutOldApplication]}
-    setApplication(updatedAppData)
-    // const newApplications = [...currentUser.applications, newAppData]
-    // const updatedCurrentUser = {...currentUser, applications: [newApplications]}
+    const updatedCurrentUser = {...currentUser, applications: filteringOutOldApplication}
+
+
     setCurrentUser(updatedCurrentUser);
+
+    const findingApartmentRelatedToApp = apartments.find(apt => apt.id == updatedAppData.apartment_id)
+    const mapingAptsAppsToUpdate = findingApartmentRelatedToApp.applications.map(app => app.id === updatedAppData.id ? updatedAppData : app)
+    const updatingAptWithNewAppsArray = {...findingApartmentRelatedToApp, applications: mapingAptsAppsToUpdate}
+    console.log("3", updatingAptWithNewAppsArray)
+    const mappingAptsArrayToAddUpdatedApt = apartments.map(apt => updatingAptWithNewAppsArray.id === apt.id ? updatingAptWithNewAppsArray : apt)
+    console.log(mappingAptsArrayToAddUpdatedApt)
+    setApartments(mappingAptsArrayToAddUpdatedApt)
+
   }
   console.log("after state change", currentUser)
 
   function handleCreatingNewApplicaiton(newApplicaitonObj) {
-    console.log(newApplicaitonObj)
+    // console.log(newApplicaitonObj)
     fetch('/applications', {
             method: "POST",
             headers: {
@@ -94,51 +101,50 @@ function App() {
   }
 
   function handleAddingApplicationToUserState(newAppData){
-    console.log(newAppData)
-    console.log("before state managemant", currentUser)
 
     const newApplications = [...currentUser.applications, newAppData]
-    const updatedCurrentUser = {...currentUser, applications: [newApplications]}
+    const updatedCurrentUser = {...currentUser, applications: newApplications}
     setCurrentUser(updatedCurrentUser);
-    console.log("during? state managgement", currentUser)
 
-    // const upNewWalks = [...currentDog.walks, newWalkData]
-    // const updatedCurrentDog = {...currentDog, walks: upNewWalks}
-    // setCurrentDog(updatedCurrentDog)
-
-    // const updatingDogsList = dogs.map(dog => dog.id === currentDog.id ? updatedCurrentDog : dog)
-    // setDogs(updatingDogsList)
+    const findingApartmentRelatedToApp = apartments.find(apt => apt.id == newAppData.apartment_id)
+    const addingAppToApartmentApplications = [...findingApartmentRelatedToApp.applications, newAppData]
+    const updatingApartmentRelatedToApp = {...findingApartmentRelatedToApp, applications: addingAppToApartmentApplications}
+    const addingUpdatedAptToApartments = apartments.map(apt => apt.id == newAppData.apartment_id ? updatingApartmentRelatedToApp : apt) 
+    setApartments(addingUpdatedAptToApartments)
   }
-  console.log("after state managgement", currentUser)
 
-  function handleApplicationDelete(id){
-    console.log("delete")
+
+  function handleApplicationDelete(id, apartment_id){
     fetch(`/applications/${id}`, {
             method: "DELETE"
         })
         .then(r => r.json())
-        .then(() => filteringDetetedApplicationFromState(id))
+        .then(() => filteringDetetedApplicationFromState(id, apartment_id))
   }
 
-  function filteringDetetedApplicationFromState(id) {
-    const filteringOutDeletedApplication = application.filter(app => app.id !== id)
+  function filteringDetetedApplicationFromState(id, apartment_id) {
+    const filteringOutDeletedApplication = applications.filter(app => app.id !== id)
     const updatingCurrentUser = {...currentUser, applications: [filteringOutDeletedApplication]}
     setCurrentUser(updatingCurrentUser)
-    setApplication()
+
+    const findingApartmentRelatedToApp = apartments.find(apt => apt.id === apartment_id)
+    const filteringOutApplicationForApt = findingApartmentRelatedToApp.applications.filter(app => app.id !== id)
+    const updatingAptRelatedToApp = {...findingApartmentRelatedToApp, applications: filteringOutApplicationForApt}
+    const addingUpdatedAptBackToApartments = apartments.map(apt => apt.id === updatingAptRelatedToApp.id ? updatingAptRelatedToApp : apt)
+    setApartments(addingUpdatedAptBackToApartments)
   }
 
 
   return (
     <div>
-      <ApartmentProvider>
         <Routes>
           <Route path='/appartment-listings' element={<AppartmentsListingPage />} />
           <Route path='/appartment/:id/application' element={<CompletedAppliction handleUpdatingUserApplication={handleUpdatingUserApplication} application={application} setApplication={setApplication} handleApplicationDelete={handleApplicationDelete}/>} />
+          <Route path='/applications/:id' element={ <UpdateApplicationForm handleUpdatingUserApplication={handleUpdatingUserApplication} />}></Route>
           <Route path='/apartment/:id/new-application' element={<NewApplicationForm onHandleCreatingNewApplicaiton={handleCreatingNewApplicaiton}/>} />
           <Route path='/signup-page' element={<SignupPage handleSignupUser={handleSignupUser}/>} />
           <Route path='/user-profile' element={<LoggedInUserPage />} />
         </Routes>
-      </ApartmentProvider>
     </div>
   );
 }
