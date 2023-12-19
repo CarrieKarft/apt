@@ -9,7 +9,6 @@ function NavBar({ onHandleLogout }) {
         <div>
             <button onClick={(e) => onHandleLogout(e.target.value)}>Logout</button>
             <NavLink to={'/appartment-listings'}><button>Search For Appartments</button></NavLink>
-            <NavLink to={'/appartment-listings'}><button>View Applications</button></NavLink>
         </div>
     )
 }
