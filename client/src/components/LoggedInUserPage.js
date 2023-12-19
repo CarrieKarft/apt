@@ -30,11 +30,11 @@ function LoggedInUserPage() {
 
 
     if(!currentUser) return <h2>Loading</h2>
-    const {name} = currentUser
-    const firstName = name.split(" ")
+    const {first_name} = currentUser
+    // const firstName = name.split(" ")
     return (
         <div>
-            <h1>Hello, {firstName[0]}</h1>
+            <h1>Hello, {first_name}</h1>
             <NavBar onHandleLogout={handleLogout}/>
             <AptsAppliedTo />
             {/* will have this component render only when user clicks button with renderDOM */}
