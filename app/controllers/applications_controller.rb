@@ -1,7 +1,7 @@
 class ApplicationsController < ApplicationController
     # need to add some application data to test these methods
 
-    def show
+    def index
         # needs to render authorize error if user not logged in
         # needs to raise not found exception if application not found
         # can rais not found exception if using find_by?
@@ -43,7 +43,7 @@ class ApplicationsController < ApplicationController
         user = find_user
         application = user.applications.find(params[:id])
         application.delete
-        head :no_content
+        render json: {}
     end
 
     private
