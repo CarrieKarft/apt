@@ -1,15 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react';
+import UserApplications from './UserApplications';
 
-function UpdateApplicationForm({ handleUpdatingUserApplication, application, apartmentId }) {
+function UpdateApplicationForm({ handleUpdatingUserApplication, application }) {
     const { applicant_email, applicant_name, current_residence_address, current_residence_phone, yearly_income, user_id, id } = application
     // console.log(application)
 
-    const [applicantEmail, setApplicantEmail] = useState("");
-    const [applicantName, setApplicantName] = useState("")
-    const [currentResidenceAddress, setCurrentResidenceAddress] = useState("");
-    const [currentResidencePhone, setCurrentResidencePhone] = useState("");
-    const [yearlyIncome, setYearlyIncome] = useState("");
+    const [applicantEmail, setApplicantEmail] = useState(applicant_email);
+    const [applicantName, setApplicantName] = useState(applicant_name)
+    const [currentResidenceAddress, setCurrentResidenceAddress] = useState(current_residence_address);
+    const [currentResidencePhone, setCurrentResidencePhone] = useState(current_residence_phone);
+    const [yearlyIncome, setYearlyIncome] = useState(yearly_income);
 
 
     // console.log(completedApplication)
@@ -21,11 +22,12 @@ function UpdateApplicationForm({ handleUpdatingUserApplication, application, apa
             applicant_email: applicantEmail,
             applicant_name: applicantName,
             current_residence_address: currentResidenceAddress,
-            current_residence_phone: current_residence_phone,
+            current_residence_phone: currentResidencePhone,
             yearly_income: yearlyIncome,
-            apartment_id: apartmentId
+            apartment_id: application.apartment_id
         }
         handleUpdatingUserApplication(updatedApplicationObj)
+        // console.log("update App Obj", updatedApplicationObj)
     }
     return (
         // prefil input fields with application data passes down as props from completed application
