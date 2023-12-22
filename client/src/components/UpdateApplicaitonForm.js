@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import React from 'react';
-import UserApplications from './UserApplications';
 
-function UpdateApplicationForm({ handleUpdatingUserApplication, application }) {
-    const { applicant_email, applicant_name, current_residence_address, current_residence_phone, yearly_income, user_id, id } = application
-    // console.log(application)
 
+function UpdateApplicationForm({ handleUpdatingUserApplication, app, setIsClicked }) {
+    const { applicant_email, applicant_name, current_residence_address, current_residence_phone, yearly_income, user_id, id } = app
+    console.log(app)
     const [applicantEmail, setApplicantEmail] = useState(applicant_email);
     const [applicantName, setApplicantName] = useState(applicant_name)
     const [currentResidenceAddress, setCurrentResidenceAddress] = useState(current_residence_address);
@@ -13,7 +12,7 @@ function UpdateApplicationForm({ handleUpdatingUserApplication, application }) {
     const [yearlyIncome, setYearlyIncome] = useState(yearly_income);
 
 
-    // console.log(completedApplication)
+
     function createUpdateApplicationObj(e) {
         e.preventDefault()
         const updatedApplicationObj = {
@@ -24,15 +23,14 @@ function UpdateApplicationForm({ handleUpdatingUserApplication, application }) {
             current_residence_address: currentResidenceAddress,
             current_residence_phone: currentResidencePhone,
             yearly_income: yearlyIncome,
-            apartment_id: application.apartment_id
+            apartment_id: app.apartment_id
         }
         handleUpdatingUserApplication(updatedApplicationObj)
-        // console.log("update App Obj", updatedApplicationObj)
+        setIsClicked(false)
     }
     return (
-        // prefil input fields with application data passes down as props from completed application
         <div>
-            <h2 style={{color: "red"}}>UpdateApplicationForm</h2>
+            <h2 style={{color: "#12406A"}}>UpdateApplicationForm</h2>
             <form onSubmit={e => createUpdateApplicationObj(e)}>
             <lable>Full Name: 
                     <input 
@@ -71,6 +69,7 @@ function UpdateApplicationForm({ handleUpdatingUserApplication, application }) {
                 </lable>
                 <input type="submit"></input>
             </form>
+            <button onClick={() => setIsClicked(false)}>Hide Edit Form</button>
         </div>
     )
 }
