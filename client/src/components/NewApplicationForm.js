@@ -1,6 +1,6 @@
-import {useParams} from 'react-router-dom'
+import {useParams, NavLink} from 'react-router-dom'
 import {useState} from 'react';
-// might need to be child of appartment not app do this with reactRouterDom switch?route situation
+
 function NewApplicationForm({ onHandleCreatingNewApplicaiton }) {
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
@@ -9,7 +9,7 @@ function NewApplicationForm({ onHandleCreatingNewApplicaiton }) {
     const [currentResAddress, setCurrentResAddress] = useState('')
 
     const {id} = useParams();
-    console.log(id)
+    // console.log(id)
 
     function creatingApplicaitonObj(e) {
         e.preventDefault()
@@ -25,14 +25,11 @@ function NewApplicationForm({ onHandleCreatingNewApplicaiton }) {
     }
 
     return (
-        // will trigger fetch to applicatons#create onSubmit
-        // associated appartment id will be passed down as prop? (used useParams to get it. Is this allowed?)
-        // will need to update current user to include new application data and appartment data
-        // may also need to update appartments state to include new application in # of applications for given appartment
-        // after clicking apply redirct to completed applicatins page
         <div>
-            <h1>NewApplicationForm</h1>
-            <form onSubmit={(e) => creatingApplicaitonObj(e)}>
+            <h1>Application Form</h1>
+            <NavLink to='/appartment-listings'><button>View Apartment Listing</button></NavLink>
+            <NavLink to='/user-profile'><button>View User Profile</button></NavLink>
+            <form onSubmit={(e) => creatingApplicaitonObj(e)} className='form'>
             <lable> Full Name: 
                     <input type="text"
                     value={fullName}
@@ -58,23 +55,16 @@ function NewApplicationForm({ onHandleCreatingNewApplicaiton }) {
                     ></input>
                 </lable>
                 <lable> Current Residence Address: 
-                    <input type="text"
+                    <input className='address' type="text"
                     value={currentResAddress}
                     onChange={e => setCurrentResAddress(e.target.value)}
                     ></input>
                 </lable>
-                <input type="submit"></input>
+                <input className='submit' type="submit"></input>
             </form>
         </div>
     )
 }
 
-// t.integer "appartment_id"
-//     t.integer "user_id"
-//     t.string "applicant_name"
-//     t.string "current_residence_phone"
-//     t.string "current_residence_address"
-//     t.string "yearly_income"
-//     t.string "applicant_email"
 
 export default NewApplicationForm;
