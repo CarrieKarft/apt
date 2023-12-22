@@ -1,7 +1,6 @@
 import {useState} from 'react'
 
 function SignupForm({ handleSignupUser }) {
-    // fetch will be to user#create
     const [name, setName] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -23,7 +22,7 @@ function SignupForm({ handleSignupUser }) {
 
     return (
         <div>
-            <h2 style={{color: "red"}}>SignupForm</h2>
+            <h2 style={{color: "black"}}>Signup</h2>
             <form onSubmit={e => handleOnSubmit(e)}>
                 <lable> Full Name: 
                     <input type="text"
