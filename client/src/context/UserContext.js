@@ -1,22 +1,22 @@
 import {useState, useEffect, createContext} from 'react';
+// import Error from '../components/Error';
 
 const UserContext = createContext();
 
 function UserProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState()
-    const [errors, setErrors] = useState()
-    // const [isLoading, setIsLoading] = useState(false)
+    const [currentUser, setCurrentUser] = useState(null)
 
     useEffect(() => {
-        fetch('/users/1')
+        fetch('/me')
         .then((r) => {
             if(r.ok) {
                 r.json().then((userData) => setCurrentUser(userData))
             } else {
-                r.json().then((errorData) => console.log(errorData.errors))
+                r.json().then((e) => console.log(e.error))
             }
         })
     }, [])
+
 
     return <UserContext.Provider value={{currentUser, setCurrentUser}}>{children}</UserContext.Provider>;
 }
