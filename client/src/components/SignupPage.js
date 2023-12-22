@@ -4,10 +4,9 @@ import LoginForm from "./LoginForm";
 function SignupPage({ handleSignupUser }) {
 
     return (
-        <div>
-            <h1>SignupPage</h1>
-            {/* need to fix this so that components are being rendered by app probably */}
-            <SignupForm handleSignupUser={handleSignupUser}/>
+        <div className="signup">
+            <h1 style={{color: 'black'}}>Apt</h1>
+            <SignupForm handleSignupUser={handleSignupUser} />
             <LoginForm />
         </div>
     )
