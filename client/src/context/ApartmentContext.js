@@ -11,7 +11,7 @@ function ApartmentProvider({ children }) {
           if(r.ok) {
               r.json().then((apartmentsData) => setApartments(apartmentsData))
           } else {
-              r.json().then((errorData) => console.log(errorData.errors))
+              r.json().catch((errorData) => alert(errorData.errors))
           }
       })
     }, [])
