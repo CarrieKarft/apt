@@ -11,3 +11,93 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1 {
+  color: white;
+}
+h2 {
+  color: white;
+}
+
+.App {
+  text-align: center;
+  background-color: #12406A;
+}
+
+.banner {
+  position: relative;
+  text-align: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+} 
+
+.bannerText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background-color: #12406A;
+  border-radius: 25px;
+  padding: 12px
+}
+
+.bannerImage {
+  width: 100%;
+}
+
+
+.mappedDiv {
+  background-color: #adbed2;
+  /* width: 90%; */
+  padding: 2%;
+  margin: 2%;
+  border-radius: 25px;
+}
+
+.aptsDiv{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+.form {
+  background-color: #adbed2;
+  /* width: 90%; */
+  padding: 5%;
+  margin: 2%;
+  margin-bottom: 4%;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+input {
+  margin: 1%;
+}
+
+input.submit{
+  width: 70%;
+
+  justify-self: center;
+}
+
+input.address{
+  width: 90%;
+  justify-self: center;
+}
+
+button{
+  margin: .1%;
+  padding: .5%;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+/* .signup{
+  background-color: #adbed2;
+  height: 100%;
+} */
