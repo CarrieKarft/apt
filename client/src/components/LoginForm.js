@@ -13,23 +13,26 @@ function LoginForm() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        fetch('/sessions',{
+        fetch('/login',{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
               },
             body: JSON.stringify({ username, password }),
-        }).then(r => r.json())
-        .then(loginData => setCurrentUser(loginData))
+        }).then((r) => {
+            if(r.ok) {
+                r.json().then(loginData => setCurrentUser(loginData))
+            } else {
+                r.json().then((e) => alert(e.error))
+            }
+        })
         navigate('/user-profile')
     }
+
    
     return (
         <div>
-            {/* hide this form and have it show when user clicks login button located in signup page */}
-            {/* fetch will be to sessions#crate */}
-            {/* needs redirect on submit */}
-            <h2 style={{color: "red"}}>LoginForm</h2>
+            <h2 style={{color: "black"}}>Login</h2>
             <form onSubmit={e => handleSubmit(e)}>
                 <lable> Username: 
                     <input type="text"
