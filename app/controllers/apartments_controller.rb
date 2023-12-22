@@ -3,6 +3,7 @@ class ApartmentsController < ApplicationController
 
     def show
         # this will need a record not found response
+        # not used in client but might be needed for debugging
 
         apt = Apartment.find(params[:id]) 
         render json: apt, status: 200
@@ -15,8 +16,8 @@ class ApartmentsController < ApplicationController
 
     def create
         # needs to rais invalid exception if info is invalid
+        # not used in client but might be needed for debugging
 
-        # stretch goal: admin profile need to be logged in as admin to create apt listing
         apartment = Apartment.create!(apartment_params)
         render json: apartment, status: :created
     end
@@ -28,11 +29,3 @@ class ApartmentsController < ApplicationController
     end
 end
 
-# t.string "name"
-#     t.integer "number_of_rooms"
-#     t.boolean "parking_available"
-#     t.integer "monthly_rent"
-#     t.string "address"
-#     t.string "phone"
-#     t.string "pets_allowed"
-#     t.boolean "available_to_rent"
