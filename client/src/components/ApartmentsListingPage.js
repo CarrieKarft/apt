@@ -1,18 +1,24 @@
-import React from "react";
-import {NavLink} from 'react-router-dom';
-import AppartmentsContainer from "./AppartmentsContainer";
-// import {ApartmentContext} from "../context/ApartmentContext";
+import React, {useContext} from "react";
+import Appartment from "./Apartment";
+import {ApartmentContext} from "../context/ApartmentContext"
+import { NavLink } from "react-router-dom";
+
 
 function AppartmentsListingPage() {
-    // const {apartments} = useContext(ApartmentContext);
-    // console.log(apartments)
+    const {apartments} = useContext(ApartmentContext);
+    console.log(apartments)
+
+    const mappingAppartentListings = apartments.map(apartment =>{
+        return <Appartment key={apartment.id} apartment={apartment}/>
+    })
+
     return (
-        <div>
-            <h1>AppartmentsListingPage</h1>
-            {/* onClick will direct to login and signup page when reactDom render is being used */}
-            <NavLink to={'/signup-page'}><button>Login or Signup</button></NavLink>
-            {/* either get rid of search bar or create custom method to search by location */}
-            <AppartmentsContainer />
+        <div className="aptsDiv">
+            <h1>Luxury apratments Available For Rent</h1>
+            <NavLink to='/user-profile'><button>View User Profile</button></NavLink>
+            <div className="aptsDiv">
+            {mappingAppartentListings}
+            </div>
         </div>
     )
 }
