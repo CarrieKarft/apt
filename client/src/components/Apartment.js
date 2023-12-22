@@ -3,10 +3,10 @@ import {NavLink} from 'react-router-dom';
 
 function Apartment({ apartment }) {
     const {id, name, address, phone, number_of_rooms, parking_available, monthly_rent, pets_allowed, available_to_rent} = apartment
-    // console.log(apartment.parking_available)
+
     return (
         <div>
-            <div style={{border: "solid", margin: "5px", padding: "5px"}}>
+            <div className='mappedDiv'>
                 <div className="HeaderDiv">
                     <h3>{name}</h3>
                     <h4>{address}</h4>
