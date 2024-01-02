@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
     resources :apartments, only: [:index, :show, :create]
     resources :applications
+    # not utilized in application just for visualizing relationships between data
+    resources :users, only: [:index]
     get '/me', to: "users#show"
     post '/login', to: "sessions#create"
     delete '/logout', to: "sessions#destroy"
