@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-    # clean up validations
     has_many :applications
     has_many :apartments, through: :applications
 
