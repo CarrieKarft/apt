@@ -2,7 +2,6 @@ class ApartmentsController < ApplicationController
     skip_before_action :authorize, only: [:index, :show, :create]
 
     def show
-        # this will need a record not found response
         # not used in client but might be needed for debugging
 
         apt = Apartment.find(params[:id]) 
@@ -15,9 +14,6 @@ class ApartmentsController < ApplicationController
     end
 
     def create
-        # needs to rais invalid exception if info is invalid
-        # not used in client but might be needed for debugging
-
         apartment = Apartment.create!(apartment_params)
         render json: apartment, status: :created
     end
