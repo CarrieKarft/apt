@@ -7,6 +7,7 @@ function SignupForm({ handleSignupUser }) {
     const [password_confirmation, setPasswordConfirmation] = useState('')
     const [phone, setPhone] = useState('')
     const [location, setLocation] = useState('')
+    
     function handleOnSubmit(e) {
         e.preventDefault()
         const newUserObj = {
@@ -24,42 +25,42 @@ function SignupForm({ handleSignupUser }) {
         <div>
             <h2 style={{color: "black"}}>Signup</h2>
             <form onSubmit={e => handleOnSubmit(e)}>
-                <lable> Full Name: 
+                <label> Full Name: 
                     <input type="text"
                     value={name}
                     onChange={e => setName(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Username: 
+                </label>
+                <label> Username: 
                     <input type="text"
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Password: 
+                </label>
+                <label> Password: 
                     <input type="text"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Password Confirmation: 
+                </label>
+                <label> Password Confirmation: 
                     <input type="text"
                     value={password_confirmation}
                     onChange={e => setPasswordConfirmation(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Phone Number: 
+                </label>
+                <label> Phone Number: 
                     <input type="text"
                     value={phone}
                     onChange={e => setPhone(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Location: 
+                </label>
+                <label> Location: 
                     <input type="text"
                     value={location}
                     onChange={e => setLocation(e.target.value)}
                     ></input>
-                </lable>
+                </label>
                 <input type="submit"></input>
             </form>
         </div>
