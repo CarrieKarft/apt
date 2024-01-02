@@ -20,7 +20,7 @@ function App() {
 
   if(!currentUser) return <SignupPage handleSignupUser={handleSignupUser} />
 
-  const {applications} = currentUser
+
   console.log(currentUser.apartments)
 
   function handleSignupUser(newUserObj) {
@@ -59,10 +59,6 @@ function App() {
   }
 
   function handleUpdatingApplicationInState(updatedAppData){
-    // console.log("before state change", currentUser)
-    const filteringOutOldApplication = applications.map(app => app.id === updatedAppData.id ? updatedAppData : app)
-    const updatedCurrentUser = {...currentUser, applications: filteringOutOldApplication}
-    setCurrentUser(updatedCurrentUser);
 
     const findingApartmentRelatedToApp = apartments.find(apt => apt.id === updatedAppData.apartment_id)
     const mapingAptsAppsToUpdate = findingApartmentRelatedToApp.applications.map(app => app.id === updatedAppData.id ? updatedAppData : app)
@@ -70,11 +66,7 @@ function App() {
     const mappingAptsArrayToAddUpdatedApt = apartments.map(apt => updatingAptWithNewAppsArray.id === apt.id ? updatingAptWithNewAppsArray : apt)
     setApartments(mappingAptsArrayToAddUpdatedApt)
 
-
-
   }
-  // console.log("after state change", currentUser)
-  // console.log("after state change", apartments)
 
   function handleCreatingNewApplicaiton(newApplicaitonObj) {
     fetch('/applications', {
@@ -93,9 +85,6 @@ function App() {
   }
 
   function handleAddingApplicationToState(newAppData){
-    console.log("before", apartments)
-    console.log("before", currentUser)
-    const newApplications = [...currentUser.applications, newAppData]
 
     const findingApartmentRelatedToApp = apartments.find(apt => apt.id === newAppData.apartment_id)
     const addingAppToApartmentApplications = [...findingApartmentRelatedToApp.applications, newAppData]
@@ -118,7 +107,7 @@ function App() {
     }
 
     const addingAptBackInToUniqueApartments = [...filteringAptOutOfUniqueApartments, creatingNewUniqueApartment]
-    const addingNewUniqueApartmentArrayToCurrentUser = {...currentUser, applications: newApplications, unique_apartments: addingAptBackInToUniqueApartments}
+    const addingNewUniqueApartmentArrayToCurrentUser = {...currentUser, unique_apartments: addingAptBackInToUniqueApartments}
     setCurrentUser(addingNewUniqueApartmentArrayToCurrentUser)
 
 
@@ -141,26 +130,24 @@ function App() {
   }
 
   function filteringDetetedApplicationFromState(id, apartment_id) {
-    // console.log("before state change", currentUser)
-    // console.log("before state change", apartments)
+
     const findingApartmentRelatedToApp = apartments.find(apt => apt.id === apartment_id)
     const filteringOutApplicationForApt = findingApartmentRelatedToApp.applications.filter(app => app.id !== id)
     const updatingAptRelatedToApp = {...findingApartmentRelatedToApp, applications: filteringOutApplicationForApt}
     const addingUpdatedAptBackToApartments = apartments.map(apt => apt.id === updatingAptRelatedToApp.id ? updatingAptRelatedToApp : apt)
     setApartments(addingUpdatedAptBackToApartments)
 
-    const filteringOutDeletedApplication = applications.filter(app => app.id !== id)
+    const findingApplicationsRelatedToCurrentUser = filteringOutApplicationForApt.filter(app => app.user_id === currentUser.id)
 
-    const appsRelatedToAptAndCurrentUser = filteringOutDeletedApplication.some(app => app.apartment_id === findingApartmentRelatedToApp.id)
+
+    const appsRelatedToAptAndCurrentUser = findingApplicationsRelatedToCurrentUser.some(app => app.apartment_id === findingApartmentRelatedToApp.id)
 
     if (!appsRelatedToAptAndCurrentUser) {
       const filteringOutUniqueApt = currentUser.unique_apartments.filter(apt => findingApartmentRelatedToApp.id !== apt.id)
-      const updatingCurrentUserWithApts = {...currentUser, applications: filteringOutDeletedApplication, unique_apartments: filteringOutUniqueApt}
+      const updatingCurrentUserWithApts = {...currentUser, unique_apartments: filteringOutUniqueApt}
       setCurrentUser(updatingCurrentUserWithApts)
-    } else {
-      const updatingCurrentUser = {...currentUser, applications: filteringOutDeletedApplication}
-      setCurrentUser(updatingCurrentUser)
     }
+
   }
 
 
@@ -169,8 +156,8 @@ function App() {
       <Header />
         <Routes>
           <Route path='/appartment-listings' element={<AppartmentsListingPage />} />
-          <Route path='/appartment/:id/application' element={<CompletedAppliction handleUpdatingUserApplication={handleUpdatingUserApplication} handleApplicationDelete={handleApplicationDelete}/>} />
-          <Route path='/apartment/:id/new-application' element={<NewApplicationForm onHandleCreatingNewApplicaiton={handleCreatingNewApplicaiton}/>} />
+          <Route path='/appartment/:id/applications' element={<CompletedAppliction handleUpdatingUserApplication={handleUpdatingUserApplication} handleApplicationDelete={handleApplicationDelete}/>} />
+          <Route path='/apartment/:id/applications/new' element={<NewApplicationForm onHandleCreatingNewApplicaiton={handleCreatingNewApplicaiton}/>} />
           <Route path='/user-profile' element={<LoggedInUserPage />} />
         </Routes>
     </div>
