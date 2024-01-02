@@ -1,5 +1,4 @@
 import {useState, useEffect, createContext} from 'react';
-// import Error from '../components/Error';
 
 const UserContext = createContext();
 
