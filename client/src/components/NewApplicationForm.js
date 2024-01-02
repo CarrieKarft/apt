@@ -9,7 +9,6 @@ function NewApplicationForm({ onHandleCreatingNewApplicaiton }) {
     const [currentResAddress, setCurrentResAddress] = useState('')
 
     const {id} = useParams();
-    // console.log(id)
 
     function creatingApplicaitonObj(e) {
         e.preventDefault()
@@ -30,36 +29,36 @@ function NewApplicationForm({ onHandleCreatingNewApplicaiton }) {
             <NavLink to='/appartment-listings'><button>View Apartment Listing</button></NavLink>
             <NavLink to='/user-profile'><button>View User Profile</button></NavLink>
             <form onSubmit={(e) => creatingApplicaitonObj(e)} className='form'>
-            <lable> Full Name: 
+            <label> Full Name: 
                     <input type="text"
                     value={fullName}
                     onChange={e => setFullName(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Email: 
+                </label>
+                <label> Email: 
                     <input type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Yearly Income: 
+                </label>
+                <label> Yearly Income: 
                     <input type="text"
                     value={yearlyIncome}
                     onChange={(e) => setYearlyIncome(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Current Residence Phone: 
+                </label>
+                <label> Current Residence Phone: 
                     <input type="text"
                     value={currentResPhone}
                     onChange={(e) => setCurrentResPhone(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Current Residence Address: 
+                </label>
+                <label> Current Residence Address: 
                     <input className='address' type="text"
                     value={currentResAddress}
                     onChange={e => setCurrentResAddress(e.target.value)}
                     ></input>
-                </lable>
+                </label>
                 <input className='submit' type="submit"></input>
             </form>
         </div>
