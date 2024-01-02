@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 
 function AppartmentsListingPage() {
     const {apartments} = useContext(ApartmentContext);
-    console.log(apartments)
 
     const mappingAppartentListings = apartments.map(apartment =>{
         return <Appartment key={apartment.id} apartment={apartment}/>
