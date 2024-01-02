@@ -17,7 +17,7 @@ function Apartment({ apartment }) {
                     <p>{parking_available ? "Parking is available" : null}</p>
                     <p>Monthly rent: {monthly_rent}</p>
                     <p>{pets_allowed}</p>
-                    {available_to_rent? <NavLink to={`/apartment/${id}/new-application`}>Apply Now</NavLink> : null}
+                    {available_to_rent? <NavLink to={`/apartment/${id}/applications/new`}>Apply Now</NavLink> : null}
                 </div>
             </div>
         </div>
@@ -25,12 +25,3 @@ function Apartment({ apartment }) {
 }
 
 export default Apartment;
-
-// t.string "name"
-// t.integer "number_of_rooms"
-// t.boolean "parking_available"
-// t.integer "monthly_rent"
-// t.string "address"
-// t.string "phone"
-// t.string "pets_allowed"
-// t.boolean "available_to_rent"
