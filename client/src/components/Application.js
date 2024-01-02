@@ -3,8 +3,9 @@ import UpdateApplicationForm from "./UpdateApplicaitonForm";
 
 function Appliction({app, id, handleApplicationDelete, handleUpdatingUserApplication }) {
     const [isClicked, setIsClicked] = useState(false)
-    console.log(app)
+
     const {apartment_id} = app
+    
     return (
         <div className='mappedDiv'>
         <h3>Applicant Name: {app.applicant_name}</h3>
