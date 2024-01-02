@@ -4,7 +4,7 @@ import React from 'react';
 
 function UpdateApplicationForm({ handleUpdatingUserApplication, app, setIsClicked }) {
     const { applicant_email, applicant_name, current_residence_address, current_residence_phone, yearly_income, user_id, id } = app
-    console.log(app)
+
     const [applicantEmail, setApplicantEmail] = useState(applicant_email);
     const [applicantName, setApplicantName] = useState(applicant_name)
     const [currentResidenceAddress, setCurrentResidenceAddress] = useState(current_residence_address);
@@ -32,41 +32,41 @@ function UpdateApplicationForm({ handleUpdatingUserApplication, app, setIsClicke
         <div>
             <h2 style={{color: "#12406A"}}>UpdateApplicationForm</h2>
             <form onSubmit={e => createUpdateApplicationObj(e)}>
-            <lable>Full Name: 
+            <label>Full Name: 
                     <input 
                     type="text"
                     value={applicantName}
                     onChange={e => setApplicantName(e.target.value)}
                     ></input>
-                </lable>
-                <lable>Email: 
+                </label>
+                <label>Email: 
                     <input 
                     type="text"
                     value={applicantEmail}
                     onChange={e => setApplicantEmail(e.target.value)}
                     ></input>
-                </lable>
-                <lable>Yearly Income: 
+                </label>
+                <label>Yearly Income: 
                     <input 
                     type="text"
                     value={yearlyIncome}
                     onChange={e => setYearlyIncome(e.target.value)}
                     ></input>
-                </lable>
-                <lable>Current Residence Phone: 
+                </label>
+                <label>Current Residence Phone: 
                     <input 
                     type="text"
                     value={currentResidencePhone}
                     onChange={e => setCurrentResidencePhone(e.target.value)}
                     ></input>
-                </lable>
-                <lable>Current Residence Address: 
+                </label>
+                <label>Current Residence Address: 
                     <input 
                     type="text"
                     value={currentResidenceAddress}
                     onChange={e => setCurrentResidenceAddress(e.target.value)}
                     ></input>
-                </lable>
+                </label>
                 <input type="submit"></input>
             </form>
             <button onClick={() => setIsClicked(false)}>Hide Edit Form</button>
