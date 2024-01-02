@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 function LoginForm() {
-    // come back to raise fetch up one level to parent component after logout functionality and signup functionality finished
     const navigate = useNavigate();
 
     const [username, setUsername] = useState('')
@@ -34,18 +33,18 @@ function LoginForm() {
         <div>
             <h2 style={{color: "black"}}>Login</h2>
             <form onSubmit={e => handleSubmit(e)}>
-                <lable> Username: 
+                <label> Username: 
                     <input type="text"
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                     ></input>
-                </lable>
-                <lable> Password: 
+                </label>
+                <label> Password: 
                     <input type="text"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     ></input>
-                </lable>
+                </label>
                 <input type="submit"></input>
             </form>
         </div>
