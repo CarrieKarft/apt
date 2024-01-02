@@ -11,7 +11,7 @@ function AptsAppliedTo() {
         return (
             <div key={index} className='mappedDiv'>
                 <Apartment apartment={apartment} />
-                <NavLink to={`/appartment/${apartment.id}/application`}>click here to view your completed applications for {apartment.name}</NavLink>
+                <NavLink to={`/appartment/${apartment.id}/applications`}>click here to view your completed applications for {apartment.name}</NavLink>
             </div>
         )
     })
