@@ -3,7 +3,7 @@ import React from 'react';
 
 
 function UpdateApplicationForm({ handleUpdatingUserApplication, app, setIsClicked }) {
-    const { applicant_email, applicant_name, current_residence_address, current_residence_phone, yearly_income, user_id, id } = app
+    const { applicant_email, applicant_name, current_residence_address, current_residence_phone, yearly_income, id } = app
 
     const [applicantEmail, setApplicantEmail] = useState(applicant_email);
     const [applicantName, setApplicantName] = useState(applicant_name)
@@ -17,7 +17,6 @@ function UpdateApplicationForm({ handleUpdatingUserApplication, app, setIsClicke
         e.preventDefault()
         const updatedApplicationObj = {
             id,
-            user_id,
             applicant_email: applicantEmail,
             applicant_name: applicantName,
             current_residence_address: currentResidenceAddress,
