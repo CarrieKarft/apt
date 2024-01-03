@@ -8,6 +8,7 @@ import LoggedInUserPage from './components/LoggedInUserPage';
 import NewApplicationForm from './components/NewApplicationForm';
 import CompletedAppliction from './components/CompletedApplication';
 import Header from './components/Header';
+import NewApartmentForm from './components/NewApartmentForm';
 import { ApartmentContext } from './context/ApartmentContext';
 import {UserContext} from '../src/context/UserContext'
 
@@ -21,7 +22,7 @@ function App() {
   if(!currentUser) return <SignupPage handleSignupUser={handleSignupUser} />
 
 
-  console.log(currentUser.apartments)
+  // console.log(currentUser.apartments)
 
   function handleSignupUser(newUserObj) {
     fetch('/signup', {
@@ -113,8 +114,8 @@ function App() {
 
     navigate('/user-profile')
   }
-  console.log("after", apartments)
-  console.log("after", currentUser)
+  // console.log("after", apartments)
+  // console.log("after", currentUser)
 
   function handleApplicationDelete(id, apartment_id){
     fetch(`/applications/${id}`, {
@@ -150,12 +151,40 @@ function App() {
 
   }
 
+  function handleCreatingNewApartment(newAptObj) {
+    console.log(newAptObj)
+    fetch('/apartments', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newAptObj),
+    }).then(r => {
+      if(r.ok) {
+          r.json().then(newAptData => handleAddingAptToAptsState(newAptData))
+      } else {
+          r.json().then(errorData => alert(errorData.errors))
+      }
+  })
+  }
+
+  function handleAddingAptToAptsState(newAptData) {
+    console.log("before", apartments)
+    console.log(newAptData)
+    const addingAptToApartments = [...apartments, newAptData]
+    console.log(addingAptToApartments)
+    setApartments(addingAptToApartments)
+    navigate('/appartment-listings')
+  }
+  console.log("after", apartments)
+
 
   return (
     <div className="App">
       <Header />
         <Routes>
           <Route path='/appartment-listings' element={<AppartmentsListingPage />} />
+          <Route path='/apartments/new' element={<NewApartmentForm onHandleCreatingNewApartment={handleCreatingNewApartment} />} />
           <Route path='/appartment/:id/applications' element={<CompletedAppliction handleUpdatingUserApplication={handleUpdatingUserApplication} handleApplicationDelete={handleApplicationDelete}/>} />
           <Route path='/apartment/:id/applications/new' element={<NewApplicationForm onHandleCreatingNewApplicaiton={handleCreatingNewApplicaiton}/>} />
           <Route path='/user-profile' element={<LoggedInUserPage />} />
