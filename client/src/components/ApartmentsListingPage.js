@@ -13,8 +13,11 @@ function AppartmentsListingPage() {
 
     return (
         <div className="aptsDiv">
-            <h1>Luxury apratments Available For Rent</h1>
-            <NavLink to='/user-profile'><button>View User Profile</button></NavLink>
+            <h1>Luxury Apratments Available For Rent</h1>
+            <div className="NavDiv">
+                <NavLink to='/user-profile'><button>View User Profile</button></NavLink>
+                <NavLink to='/apartments/new'><button>Create A New Listing</button></NavLink>
+            </div>
             <div className="aptsDiv">
             {mappingAppartentListings}
             </div>
