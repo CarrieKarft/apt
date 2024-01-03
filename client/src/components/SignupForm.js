@@ -7,7 +7,7 @@ function SignupForm({ handleSignupUser }) {
     const [password_confirmation, setPasswordConfirmation] = useState('')
     const [phone, setPhone] = useState('')
     const [location, setLocation] = useState('')
-    
+
     function handleOnSubmit(e) {
         e.preventDefault()
         const newUserObj = {
@@ -38,13 +38,13 @@ function SignupForm({ handleSignupUser }) {
                     ></input>
                 </label>
                 <label> Password: 
-                    <input type="text"
+                    <input type="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     ></input>
                 </label>
                 <label> Password Confirmation: 
-                    <input type="text"
+                    <input type="password"
                     value={password_confirmation}
                     onChange={e => setPasswordConfirmation(e.target.value)}
                     ></input>
